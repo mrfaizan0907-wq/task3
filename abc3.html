@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Temperature Converter</title>
+    <!-- Links to your separate CSS file below -->
+    <link rel="stylesheet" href="abc3.css">
+</head>
+<body>
+
+    <div class="converter-card">
+        <h2>Temperature Converter</h2>
+        
+        <!-- Input Field with Number Validation -->
+        <div class="input-group">
+            <label for="temperature">Degrees</label>
+            <input type="number" id="temperature" placeholder="Enter number..." required>
+        </div>
+
+        <!-- Unit Selection Dropdown -->
+        <div class="input-group">
+            <label for="unit">Type</label>
+            <select id="unit">
+                <option value="celsius">Celsius (°C)</option>
+                <option value="fahrenheit">Fahrenheit (°F)</option>
+                <option value="kelvin">Kelvin (K)</option>
+            </select>
+        </div>
+
+        <!-- Convert Button -->
+        <button id="convert-btn">Convert</button>
+
+        <!-- Result Display Area -->
+        <div class="result-box">
+            <p class="result-label">Converted Results</p>
+            <div id="result-display">Enter a value to see conversion</div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('convert-btn').addEventListener('click', function() {
+            const inputVal = document.getElementById('temperature').value;
+            const unit = document.getElementById('unit').value;
+            const display = document.getElementById('result-display');
+
+            // Input validation check
+            if (inputVal === "" || isNaN(inputVal)) {
+                display.innerHTML = "<span style='color: #ff4d4d;'>Please enter a valid number!</span>";
+                return;
+            }
+
+            const temp = parseFloat(inputVal);
+            let resultHtml = "";
+
+            if (unit === "celsius") {
+                let f = (temp * 9/5) + 32;
+                let k = temp + 273.15;
+                resultHtml = `${f.toFixed(2)} °F<br>${k.toFixed(2)} K`;
+            } else if (unit === "fahrenheit") {
+                let c = (temp - 32) * 5/9;
+                let k = (temp - 32) * 5/9 + 273.15;
+                resultHtml = `${c.toFixed(2)} °C<br>${k.toFixed(2)} K`;
+            } else if (unit === "kelvin") {
+                let c = temp - 273.15;
+                let f = (temp - 273.15) * 9/5 + 32;
+                resultHtml = `${c.toFixed(2)} °C<br>${f.toFixed(2)} °F`;
+            }
+
+            display.innerHTML = resultHtml;
+        });
+    </script>
+</body>
+</html>
